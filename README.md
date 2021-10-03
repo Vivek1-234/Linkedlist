@@ -1,3 +1,5 @@
+//code of a flatenning of a linnked list  -->>>>>
+
 #include<iostream>
 using namespace std;
 class node{
