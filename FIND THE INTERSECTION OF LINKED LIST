@@ -1,0 +1,148 @@
+//   program to find the the intersection of the two linked list ----->>>>>  if yes retun 1 otherwise -1 
+
+
+#include<iostream>
+using namespace std;
+
+class node{
+
+    public:
+    int  data ; 
+    node*  next ; 
+
+    node(int val){
+        data = val ;
+        next = NULL;
+
+    }
+};
+
+void intersection(node* &head1 , node* &head2 , int  pos){
+  
+  node* temp1 = head1 ;
+  pos--;
+  while(pos--){
+   temp1 = temp1->next ;
+
+  }
+  node* temp2 = head2;
+
+  while(temp2->next != NULL){
+      temp2 = temp2->next;
+  }
+  temp2->next = temp1;
+
+}
+
+int length(node* &head){
+    node* temp = head ; 
+    
+    int l = 0  ; 
+    while(temp!=NULL){
+       temp = temp->next;
+       l++;
+  }
+           return l ;
+}
+
+int  intersectionpoint(node* &head1 , node * &head2 ){
+  
+  int l1 = length(head1);
+  int l2 = length(head2);
+  
+  int d = 0 ;
+  node* temp1 ; 
+  node* temp2 ; 
+
+  if(l1>l2){
+      d = l1-l2;
+      temp1 = head1 ; 
+      temp2 = head2;
+    
+
+
+
+  }
+  else{
+      d = l2-l1;
+      temp1 = head2; 
+      temp2 = head1;
+  }
+
+  while(d){
+
+      temp1 = temp1->next;
+      if(temp1 == NULL){
+          return -1;
+      }
+      d--;
+  }
+  
+  while(temp1->next!=NULL && temp2->next!=NULL){
+
+      if(temp1==temp2){
+          return temp1->data;
+      }
+      temp1 = temp1->next;
+      temp2 = temp2->next;
+  }
+return -1 ; 
+}
+
+
+void insertattail(node* &head , int val){
+    node* n = new node(val);
+     if(head==NULL)
+     {
+         head = n ;
+         return ; 
+     }
+
+     node* temp = head ; 
+
+    while(temp->next!=NULL){
+        temp = temp->next;
+    }
+     temp->next = n;
+
+}
+void display(node* head){
+    node* temp = head ;
+
+    cout<<"Your linked list is --->>>"<<endl;
+    while(temp!=NULL){
+        cout<<temp->data<<" ";
+        temp = temp->next;
+    }
+    cout<<endl;
+}
+
+
+int main(){
+
+node* head1 = NULL;
+node* head2 = NULL;
+
+insertattail(head1 , 1 );
+insertattail(head1 , 2 );
+insertattail(head1 , 3 );
+insertattail(head1 , 4 );
+insertattail(head1 , 5 );
+insertattail(head1 , 6 );
+insertattail(head2 , 7 );
+insertattail(head2 , 8);
+
+
+
+display(head1);
+display(head2);
+
+ intersection(head1 , head2 , 4);
+ display(head1);
+ display(head2);
+
+cout<<intersectionpoint(head1 , head2 );
+
+return 0;
+ }
+
