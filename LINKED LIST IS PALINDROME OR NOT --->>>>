@@ -1,0 +1,112 @@
+//   program to check the given linked list is palindrome is not --->>>>>>
+//  let's see an example --->>>>
+//  1 2 3 2 1 ---->>>>>  yes it is plaindrome 
+//  now let's see the code of this linked lsit ----->>>>>
+
+
+#include<iostream>
+using namespace std;
+
+class node{
+
+    public:
+    int  data ; 
+    node*  next ; 
+
+    node(int val){
+        data = val ;
+        next = NULL;
+
+    }
+};
+
+node* reverselist(node* head){
+    node* prev = NULL;
+    node* curptr = head;
+    node* nextptr;
+
+    while(curptr!=NULL)
+    {
+       nextptr = curptr->next;
+       curptr->next = prev;
+
+       prev = curptr;
+       curptr = nextptr;
+    }
+    return prev;
+}
+bool palindromeornot(node* &head){
+    if(head==NULL && head->next==NULL){
+        return true;
+    }
+    node* slow = head;
+    node* fast = head;
+
+    while(fast!=NULL && fast->next!=NULL){
+        slow = slow->next;
+        fast= fast->next->next;
+
+    }
+   
+   slow->next = reverselist(slow->next);
+   slow = slow->next;
+ 
+   
+   while(slow!=NULL){
+
+       if(slow->data!=head->data){
+           
+           return false ;        
+       }
+       slow= slow->next;
+      head = head->next;
+
+   }
+   return true ;
+}
+
+void insertattail(node* &head , int val){
+    node* n = new node(val);
+     if(head==NULL)
+     {
+         head = n ;
+         return ; 
+     }
+
+     node* temp = head ; 
+
+    while(temp->next!=NULL){
+        temp = temp->next;
+    }
+     temp->next = n;
+
+}
+void display(node* head){
+    node* temp = head ;
+
+    cout<<"Your linked list is --->>>"<<endl;
+    while(temp!=NULL){
+        cout<<temp->data<<" ";
+        temp = temp->next;
+    }
+    cout<<endl;
+}
+
+
+int main(){
+node* head = NULL;
+
+insertattail(head , 1 );
+insertattail(head , 2 );
+insertattail(head , 3 );
+insertattail(head , 2 );
+insertattail(head , 1 );
+
+display(head);
+
+cout<<palindromeornot(head);
+
+
+
+return 0;
+ }
