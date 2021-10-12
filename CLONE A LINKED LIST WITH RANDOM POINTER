@@ -1,0 +1,99 @@
+//  program to print a clone linked list with the random pointer ------>>>>>
+// --->>>>   we have tp print a similar copy of this linked list --------->>>>>>>>>>>
+//  -->>>  in this linked list (node-->>> have a  random pointer)--->>>>>>>
+// -->>>  node will belong to the (next pointer) as well as to the any (random  pointer) ------>>>>>>>>
+
+
+
+#include<iostream>
+using namespace std;
+
+class node{
+    public:
+    int data;
+    node* random ;
+    node* next ;
+
+    node(int val){
+        data = val ; 
+        random = next = NULL;
+        
+    }
+};
+
+node* clonealinkedlistwithrandompointercopy(node* &head){
+  node* cur = head;
+
+  while(cur!=NULL){ 
+     node*  temp = cur->next;     
+      cur->next = new node(cur->data);
+     
+      cur->next->next = temp ;
+      cur = temp ;
+  }  
+ 
+  cur = head ;
+
+
+while(cur!=NULL){
+
+    if(cur->next!=NULL){
+
+    cur->next->random = cur->random!=NULL ? cur->random->next : NULL;
+    }
+
+    cur = cur->next->next;
+}
+     
+     node* original = head; 
+     node* copy = head->next;
+     node* temp = copy ;
+
+    while(original->next!=NULL && copy->next!=NULL ){
+
+     original->next = original->next->next ;
+     copy->next = copy->next->next;
+
+     original = original->next;
+     copy    = copy->next;
+
+    }
+
+
+
+    return temp ; 
+
+}
+
+void display (node* head){
+    node* temp = head ; 
+    while(temp!= NULL){
+        cout<<"DATA-->>>  "<<temp->data<<"   DATA->RANDOM--->>>> "<<temp->random->data<<endl;
+        temp = temp->next;
+    }
+    cout<<endl;
+}
+
+int main(){
+
+node* head = new node(10);
+ head->next = new node(20);
+ head->next->next = new node(30);
+ head->next->next->next = new node(40);
+ head->next->next->next->next = new node(50);
+
+ head->random = head->next->next;
+ head->next->random = head;
+ head->next->next->random = head->next->next->next->next;
+ head->next->next->next->random =  head->next->next->next->next;
+ head->next->next->next->next->random = head;
+
+display(head);
+
+
+clonealinkedlistwithrandompointercopy(head);
+display(head);
+
+
+return 0;
+ }
