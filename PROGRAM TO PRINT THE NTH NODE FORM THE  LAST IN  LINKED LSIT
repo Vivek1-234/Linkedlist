@@ -1,0 +1,109 @@
+//  program to print the nth node from the end of the linked list --------->>>>>>>>>>>>>>>>>>>>
+
+//  1  2  3   4    5   6   --->>>>>>>>>  if n= 4 -->>>>>>>>>>  then ans = 2 
+//  trick -->>>  we have to traverse till this node ----->>>>>>>>   length-n+1 --->>>>>  and print the data of this node --------->>>>>>>>
+
+
+//  let's see the code ---->>>>>  
+
+
+#include<iostream>
+using namespace std;
+
+class node{    
+
+    public:
+    int  data ; 
+    node*  next ; 
+
+    node(int val){
+        data = val ;                                 
+        next = NULL;   
+
+    }  
+};
+
+void insertattail(node* &head , int val){
+    node* n = new node(val);
+
+     if(head==NULL)      
+     {     
+         head = n ;
+         return  ;     
+     }
+
+     node* temp = head ; 
+
+    while(temp->next!=NULL){
+        temp = temp->next;
+    }
+     temp->next = n;
+
+}
+
+void printnthnodefromlast(node* head  , int n ){
+      
+      int length =0 ; 
+     node* temp = head ; 
+
+    while(temp!=NULL){
+       temp = temp ->next ; 
+       length++;
+    }
+
+    if(length<n){
+
+        return ; 
+    }
+        temp = head ;
+    for(int i =1 ; i<length-n+1; i++){
+          temp = temp->next;
+    }
+
+    cout<<temp->data<<endl;
+
+    
+}
+
+//  Now we can also do this problem recursively ------->>>>>>>>>
+
+void printnthnodefromlastrecusively(node* head  , int n ){ 
+
+      if(head==NULL){
+        return ;  
+    }
+    
+      node* temp = head ; 
+      static  int i =0 ; 
+  
+
+
+  printnthnodefromlastrecusively(temp->next , n ); 
+
+    if(++i == n ){
+
+      cout<<temp->data<<endl;
+  }  
+
+
+}
+
+
+int main(){
+node* head = NULL;
+
+insertattail(head , 1 );
+insertattail(head , 2 );
+insertattail(head , 3 );
+insertattail(head , 4 );
+insertattail(head , 5 );
+insertattail(head , 6 );
+
+
+// printnthnodefromlast(head , 2);
+ printnthnodefromlastrecusively(head , 2);
+
+
+
+return 0;
+ }
